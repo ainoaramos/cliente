@@ -68,20 +68,24 @@
       padding: 20px;
       width: calc(100% - 220px);
     }
-
-    #list ul {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      padding: 0;
+    .hidden{
+      display: none;
     }
 
-    #list ul li {
-      list-style: none;
-      padding: 10px;
-      background-color: #eee;
-      border-radius: 5px;
-      text-align: center;
+    #list{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); 
+      gap: 20px; 
+      padding: 20px;
+      list-style-type: none;
+    }
+    
+    #list > * { 
+      border: 2px solid #ccc; 
+      padding: 15px;
+      border-radius: 8px; 
+      background-color: #f9f9f9; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     }
 
     #form {

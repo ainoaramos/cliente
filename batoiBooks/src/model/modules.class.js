@@ -1,33 +1,33 @@
 import Module from './module.class.js';
 import { getDBModules} from '../services/modules.api.js'; 
 
-export default class Modules{
-    constructor(){
-        this.data=[]
+export default class Modules {
+    constructor() {
+      this.data = [];
     }
-
+  
+    async populate() {
+      const data = await getDBModules();
+      this.data = data.map(
+        (item) =>
+          new Module(item.code, item.cliteral, item.vliteral, item.courseId)
+      );
+    }
+  
     toString() {
-        return this.data.map(module => module.toString()).join();
+      let text = `Modules: ${this.data.length}`;
+      this.data.forEach((item) => {
+        text += `\n${item.toString()}`;
+      });
+  
+      return text;
     }
-
-    async  populate() {
-        try {
-            const modules = await getDBModules();
-            this.data = modules.map(moduleData => new Module(moduleData.code, moduleData.cliteral, moduleData.vliteral, moduleData.courseId));
-        } catch (error) {
-            console.error("Error al obtener los módulos:", error);
-        }
-    
-    }
-
-
-     getModuleByCode(moduleCode){
-        let module=this.data.find(mod => mod.code===moduleCode);
-      
-        if(!module){
-          throw new Error("Modulo no encontrado");
-        }
-        return module;
-          
+  
+    getModuleByCode(moduleCode) {
+      const module = this.data.find((item) => item.code === moduleCode);
+      if (!module) {
+        throw new Error(`No existe el módulo con code ${moduleCode}`);
       }
+      return module;
     }
+  }

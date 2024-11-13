@@ -1,118 +1,75 @@
 import User from './user.class.js';
 import { getDBUsers, addDBUser, removeDBUser, changeDBUser, changeDBUserPassword} from '../services/users.api.js';
 
-export default class Users{
-    constructor(){
-        this.data=[]
+export default class Users {
+    constructor() {
+      this.data = [];
     }
-
-    toString() {
-        return this.data.map(user => user.toString()).join();
+  
+    async populate() {
+      const data = await getDBUsers();
+      this.data = data.map(item => new User(item.id, item.nick, item.email, item.password));
     }
-
-    async populate(){
-        try{
-            const users = await getDBUsers();
-            this.data=users.map(userData=>new User(userData.id, userData.nick, userData.email, userData.password));
-    }catch(error){
-        console.error("Error al obtener los usuarios");
+  
+    async addUser(user) {
+      const dataAdded = await addDBUser(user)
+      const newUser = new User(dataAdded.id, dataAdded.nick, dataAdded.email, dataAdded.password)
+      this.data.push(newUser)
+      return newUser
     }
-}
-
-    async addUser(userData) {
-    try{
-        const newUserData=await addDBUser(userData);
-        const newUser= new User (newUserData.id, newUserData.nick, newUserData.email, newUserData.password);
-        this.data.push(newUser);
-        return newUser;
-    }catch(error){
-        console.error("Error al añadir el usuario");
-
+  
+    async removeUser(userId) {
+      await removeDBUser(userId)
+      // Si no existe el usuario se habrá lanzado un error
+      const index = this.getUserIndexById(userId)
+      this.data.splice(index, 1)
     }
-}
-    
-
-    async removeUser(id) {
-        const posicion = this.data.findIndex(user => user.id === id);
-
-        if (posicion === -1) {
-            throw new Error("Usuario no encontrado");
-        }
-        try {
-            await removeDBUser(id); 
-            this.data.splice(posicion, 1); 
-            return "Usuario eliminado";
-        } catch (error) {
-            throw new Error("Error al eliminar el usuario de la base de datos");
-        }
+  
+    async changeUser(user) {
+      const dataChanged = await changeDBUser(user)
+      const modifiedUser = new User(dataChanged.id, dataChanged.nick, dataChanged.email, dataChanged.password)
+      const index = this.getUserIndexById(user.id)
+      this.data.splice(index, 1, modifiedUser);
+      return modifiedUser
     }
-
-    
-
-
-    async changeUser(cambiarUser) {
-        try {
-            const updateUserData = await changeDBUser(cambiarUser);
-            const posicion = this.data.findIndex(user => user.id === updateUserData.id);
-    
-            if (posicion === -1) {
-                throw new UserNotFoundError("Usuario no encontrado");
-            }
-    
-            this.data[posicion] = new User(updateUserData);
-            return this.data[posicion];
-        } catch (error) {
-            console.error("Error al modificar el usuario:", error);
-            throw error;
-        }
-    }
-    
+  
     async changeUserPassword(userId, newPassword) {
-        const userIndex = this.data.findIndex(user => user.id === userId);
-        if (userIndex === -1) {
-            throw new Error("Usuario no encontrado");
-        }
-        try {
-           
-            const updatedUser = await changeDBUserPassword(userId, newPassword);
-            this.data[userIndex].password = updatedUser.password;
-            
-            return this.data[userIndex]; 
-        } catch (error) {
-            console.error("Error al cambiar la contraseña:", error);
-            throw new Error("Error al cambiar la contraseña"); 
-        }
+      const dataChanged = await changeDBUserPassword(userId, newPassword)
+      const modifiedUser = new User(dataChanged.id, dataChanged.nick, dataChanged.email, dataChanged.password)
+      const index = this.getUserIndexById(userId)
+      this.data.splice(index, 1, modifiedUser);
+      return modifiedUser
+    }
+  
+    toString() {
+      let text = `Users: ${this.data.length}`;
+      this.data.forEach(item => {
+        text += `\n${item.toString()}`;
+      });
+      return text;
+    }
+  
+    async getUserById(userId) {
+      const user = this.data.find((item) => item.id === userId)
+      if (!user) {
+        throw new Error(`No existe el usuario con id ${userId}`)
+      }
+      return user
     }
     
-
-    
-
-    getUserById(userId){
-        let user=this.data.find(user => user.id===userId);
-          
-        if(!user){
-            throw new Error("Usuario no encontrado");
-             }
-            return user;
-          }
-        
-
-    getUserIndexById(userId){
-        let user=this.data.findIndex(user => user.id===userId);
-          
-        if(user===-1){
-            throw new Error("Usuario no encontrado");
-                }
-            return user;
-          }
-          
-    getUserByNickName(nick){
-        let user=this.data.find(user => user.nick===nick);
-          
-        if(!user){
-            throw new Error("Usuario no encontrado");
-                }
-            return user;
-            }
-
-        }
+    getUserIndexById(userId) {
+      const index = this.data.findIndex((item) => item.id === userId)
+      if (index === -1) {
+        throw new Error(`No existe el usuario con id ${userId}`)
+      }
+      return index
+    }
+  
+    getUserByNickName(nick) {
+      const user = this.data.find((item) => item.nick === nick)
+      if (!user) {
+        throw new Error(`No existe el usuario con nick ${nick}`)
+      }
+      return user
+    }
+  }
