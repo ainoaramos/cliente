@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   const router = new Router(view);  
+
+  
 });
 
 

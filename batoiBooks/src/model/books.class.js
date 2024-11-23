@@ -2,7 +2,7 @@ import Book from './book.class.js';
 import { getDBBooks, addDBBook, removeDBBook, changeDBBook } from '../services/books.api.js'; 
 
 const NOTES = 'Apunts'
-
+const SERVER = 'http://localhost:3000';
 export default class Books {
   constructor() {
     this.data = [];
@@ -69,10 +69,24 @@ export default class Books {
     return bookIndex
   }
   
-  bookExists(userId, moduleCode) {
-    return !!this.data.find((item) => item.userId === userId 
-      && item.moduleCode === moduleCode)
+  async bookExists(userId, moduleCode) {
+    const url = `${SERVER}/books?userId=${userId}&moduleCode=${moduleCode}`;
+    
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Error en la API: ${response.status} - ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+     
+      return data.length > 0; 
+    } catch (error) {
+      console.error("Error al verificar si el libro ya existe:", error);
+      return false; 
+    }
   }
+  
   
   booksFromUser(userId) {
     return this.data.filter((item) => item.userId === userId)

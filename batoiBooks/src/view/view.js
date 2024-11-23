@@ -18,6 +18,12 @@ class View{
     selectUI.appendChild(option);
   });
   }
+  validateForm() {
+    const form = document.getElementById('bookForm');
+    if (form) {
+      form.reportValidity();  
+    }
+  }
 
   
   renderBook(book) {

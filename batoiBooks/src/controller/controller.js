@@ -65,27 +65,42 @@ export default class Controller {
 
   }
 
+
   async handleSubmitBook(payload) {
-    payload.pages=parseInt(payload.pages);
-    payload.price=parseFloat(payload.price);
-    try{    
-      if(payload.id){
-        payload.id=parseInt(payload.id);
-        const edited= await this.books.changeBook(payload);
+    const userId = 4; // O obtén este valor de donde corresponda, por ejemplo, del localStorage
+    const moduleCode = payload.moduleCode;  // El módulo debe estar incluido en el formulario
+
+    try {
+      // Verificamos si el usuario ya tiene un libro en ese módulo
+      const bookExists = await this.books.bookExists(userId, moduleCode);
+
+      if (bookExists) {
+        this.view.renderMessage('error', 'Ya tienes un libro en este módulo.');
+        return;
+      }
+
+      // Si no existe un libro, añadimos el nuevo libro
+      payload.pages = parseInt(payload.pages);
+      payload.price = parseFloat(payload.price);
+
+      if (payload.id) {
+        payload.id = parseInt(payload.id);
+        const edited = await this.books.changeBook(payload);
         this.view.renderMessage('info', 'Libro modificado');
         this.view.renderEditedBook(edited);
-    
-     }else{
-        const newBook= await this.books.addBook(payload);
+      } else {
+        const newBook = await this.books.addBook(payload);
         this.view.renderMessage('info', 'Libro añadido');
         this.view.renderBook(newBook);
-        }
-    }catch(error){
-      this.view.renderMessage('error', error);
+      }
+    } catch (error) {
+      this.view.renderMessage('error', error.message);
       return;
-    }    
-this.view.renderFormToAddBook();
-}
+    }
+
+    this.view.renderFormToAddBook();
+  }
+
 
   async handleRemoveBook(id) {
     if(!confirm('¿Quieres borrar este libro?'))return;

@@ -2143,6 +2143,105 @@
       "pages": 1234,
       "status": "nex",
       "comments": ""
+    },
+    {
+      "id": "c008",
+      "moduleCode": "- Seleciona un modulo -",
+      "publisher": "a",
+      "price": 5,
+      "pages": 6,
+      "status": "good",
+      "comments": ""
+    },
+    {
+      "id": "73bd",
+      "moduleCode": "- Seleciona un modulo -",
+      "publisher": "a",
+      "price": 0.02,
+      "pages": 2,
+      "status": "nex",
+      "comments": ""
+    },
+    {
+      "id": "3790",
+      "moduleCode": "- Seleciona un modulo -",
+      "publisher": "a",
+      "price": 0.02,
+      "pages": 2,
+      "status": "good",
+      "comments": ""
+    },
+    {
+      "id": "ad9f",
+      "moduleCode": "- Seleciona un modulo -",
+      "publisher": "sxdfg",
+      "price": 234,
+      "pages": 234,
+      "status": "nex",
+      "comments": ""
+    },
+    {
+      "id": "77c2",
+      "moduleCode": "- Seleciona un modulo -",
+      "publisher": "asd",
+      "price": 234,
+      "pages": 234,
+      "status": "nex",
+      "comments": ""
+    },
+    {
+      "id": "9ea2",
+      "moduleCode": "- Seleciona un modulo -",
+      "publisher": "asc",
+      "price": 123,
+      "pages": 123,
+      "status": "nex",
+      "comments": ""
+    },
+    {
+      "id": "8764",
+      "moduleCode": "- Seleciona un modulo -",
+      "publisher": "a",
+      "price": 123,
+      "pages": 123,
+      "status": "nex",
+      "comments": ""
+    },
+    {
+      "id": "36f1",
+      "moduleCode": "0011",
+      "publisher": "a",
+      "price": 123,
+      "pages": 123,
+      "status": "nex",
+      "comments": ""
+    },
+    {
+      "id": "72df",
+      "moduleCode": "0011",
+      "publisher": "a",
+      "price": 123,
+      "pages": 123,
+      "status": "nex",
+      "comments": ""
+    },
+    {
+      "id": "da11",
+      "moduleCode": "0011",
+      "publisher": "a",
+      "price": 123,
+      "pages": 123,
+      "status": "nex",
+      "comments": ""
+    },
+    {
+      "id": "f429",
+      "moduleCode": "0013",
+      "publisher": "a",
+      "price": 123,
+      "pages": 123,
+      "status": "nex",
+      "comments": ""
     }
   ]
 }
