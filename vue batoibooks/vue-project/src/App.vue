@@ -1,12 +1,9 @@
 <script setup>
-import AppMenu from './components/AppMenu.vue';
-import AppMessages from './components/AppMessages.vue';
-import BooksList from './components/BooksList.vue';
-import AddBook from './components/AddBook.vue';
-import AppCart from './components/AppCart.vue';
-import AppAbout from './components/AppAbout.vue';
 import { ref } from 'vue';
 import axios from 'axios';
+import AppMenu from './components/AppMenu.vue';
+import AppMessages from './components/AppMessages.vue';
+import { useRoute } from 'vue-router';
 
 const messages = ref([]);
 const books = ref([]);
@@ -58,10 +55,7 @@ fetchBooks();
 
   <main>
     <AppMessages :messages="messages" />
-    <BooksList :books="books" @deleteBook="deleteBook" />
-    <AddBook @addBook="addBook" />
-    <AppCart :cart="cart" />
-    <AppAbout />
+    <router-view :books="books" @deleteBook="deleteBook" @addBook="addBook" />
   </main>
 </template>
 
@@ -84,6 +78,7 @@ main {
   padding: 2rem;
 }
 </style>
+
 
 
 

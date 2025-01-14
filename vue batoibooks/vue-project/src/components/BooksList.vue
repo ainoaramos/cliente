@@ -39,15 +39,13 @@ export default {
     },
   },
   methods: {
-
     addToCart(book) {
       this.$emit('addToCart', book.id);
     },
 
     editBook(book) {
-      this.$emit('editBook', book.id);
+      this.$router.push({ name: 'edit-book', params: { id: book.id } }); 
     },
-
 
     confirmDelete(book) {
       const confirmation = window.confirm(
@@ -55,10 +53,10 @@ export default {
       );
 
       if (confirmation) {
-        this.$emit('deleteBook', book.id);  
+        this.$emit('deleteBook', book.id);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

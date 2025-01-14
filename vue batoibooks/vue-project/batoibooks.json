@@ -2131,12 +2131,14 @@
       "userId": 2,
       "moduleCode": "5025",
       "publisher": "Apunts",
-      "price": 12,
+      "price": 1,
       "pages": 25,
       "status": "good",
       "photo": "",
-      "comments": "",
-      "soldDate": "2023-02-01"
+      "comments": "e",
+      "soldDate": "2023-02-01",
+      "module": "Didáctica de la educación infantil",
+      "state": "Usado"
     },
     {
       "userId": 3,
@@ -2173,6 +2175,15 @@
       "comments": "",
       "soldDate": "",
       "id": "8"
+    },
+    {
+      "id": "234",
+      "module": "Ofertas gastronómicas",
+      "publisher": "d",
+      "price": 1234,
+      "pages": 1233,
+      "comments": "wsd",
+      "state": "Usado"
     }
   ]
 }

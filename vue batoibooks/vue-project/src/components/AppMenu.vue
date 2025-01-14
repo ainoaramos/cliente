@@ -1,45 +1,30 @@
 <template>
-  <header>
-    <h1>BatoiBooks</h1>
-    <nav>
-      <ul>
-        <li><a href="#">Ver Libros</a></li>
-        <li><a href="#">Añadir Libro</a></li>
-        <li><a href="#">Acerca de...</a></li>
-      </ul>
-    </nav>
-  </header>
+  <nav>
+    <ul>
+      <li><router-link to="/">Ver Libros</router-link></li>
+      <li><router-link to="/add">Nuevo Libro</router-link></li>
+      <li><router-link to="/cart">Ver Carrito</router-link></li>
+      <li><router-link to="/about">Acerca de...</router-link></li>
+    </ul>
+  </nav>
 </template>
 
-<script>
-export default {
-  name: "AppMenu",
-};
-</script>
-
 <style scoped>
-header {
-  font-family: Arial, sans-serif;
-  margin-bottom: 20px;
-}
-h1 {
-  font-size: 1.8em;
-  color: #000;
-}
 nav ul {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
-nav ul li {
-  margin: 5px 0;
+
+nav li {
+  margin: 10px 0;
 }
-nav ul li a {
+
+nav li a {
   text-decoration: none;
-  color: #0000ee;
-  font-size: 1em;
+  color: blue;
 }
-nav ul li a:hover {
+
+nav li a:hover {
   text-decoration: underline;
 }
 </style>
