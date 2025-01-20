@@ -1,45 +1,96 @@
 <template>
   <div class="cart">
-    <h2>Libros en el carrito</h2>
-    <ul>
-      <li v-for="item in cart" :key="item.id">{{ item.title }}</li>
-    </ul>
-    <p>Lorem ipsum dolor sit, amet consectetur adipiscing elit. Odit totam, adipisci iste ducimus id volupt Juan Segura - DWEC</p>
+    <h1>Carrito de Compras</h1>
+    <div class="book-list">
+      <BookItem
+        v-for="book in cartBooks"
+        :key="book.id"
+        :book="book">
+
+        <template #buttons>
+          <button @click="removeFromCart(book.id)">
+            <span class="icon-cart-off"></span> Eliminar
+          </button>
+        </template>
+      </BookItem>
+    </div>
+
+    <div class="cart-summary">
+      <p>Total de libros: {{ totalBooks }}</p>
+      <p>Importe total: €{{ totalPrice.toFixed(2) }}</p>
+      <button @click="clearCart">Vaciar Carrito</button>
+      <button @click="checkout">Realizar Compra</button>
+    </div>
   </div>
 </template>
 
 <script>
+import {computed} from 'vue';
+import {useCartStore} from '../stores/cart';
+import BookItem from './BookItem.vue';
+
 export default {
-  name: "AppCart",
-  props: {
-    cart: {
-      type: Array,
-      required: true,
-    },
+  components: { BookItem },
+  setup() {
+    const cartStore = useCartStore();
+
+    const cartBooks = computed(() => cartStore.cart);
+    const totalBooks = computed(() => cartStore.totalBooks);
+    const totalPrice = computed(() => cartStore.totalPrice);
+
+    const removeFromCart = (id) => {
+      cartStore.removeFromCart(id);
+    };
+
+    const clearCart = () => {
+      cartStore.clearCart();
+    };
+
+    const checkout = () => {
+      cartStore.checkout();
+    };
+
+    return {
+      cartBooks,
+      totalBooks,
+      totalPrice,
+      removeFromCart,
+      clearCart,
+      checkout,
+    };
   },
 };
 </script>
 
 <style scoped>
 .cart {
-  margin-top: 20px;
-  background-color: #f9f9f9;
-  padding: 20px;
-  border: 1px solid #ccc;
+  padding: 2rem;
 }
-ul {
-  list-style: none;
-  padding: 0;
+
+.book-list {
+  margin-bottom: 2rem;
 }
-li {
-  margin-bottom: 5px;
+
+.cart-summary {
+  border-top: 1px solid #ccc;
+  padding-top: 1rem;
 }
-p {
-  margin-top: 10px;
-  font-size: 0.9em;
-  color: #555;
+
+button {
+  margin-right: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:nth-child(2) {
+  background-color: #ff5722;
 }
 </style>
+
+
 
 
 

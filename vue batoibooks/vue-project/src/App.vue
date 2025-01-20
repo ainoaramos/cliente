@@ -1,9 +1,9 @@
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import axios from 'axios';
 import AppMenu from './components/AppMenu.vue';
 import AppMessages from './components/AppMessages.vue';
-import { useRoute } from 'vue-router';
+import {useRoute} from 'vue-router';
 
 const messages = ref([]);
 const books = ref([]);
@@ -31,7 +31,7 @@ const deleteBook = async (bookId) => {
 };
 
 const addBook = async (book) => {
-  console.log("Libro recibido en el padre:", book); 
+ 
   try {
     const response = await axios.post("http://localhost:3000/books", book);
     books.value.push(response.data);

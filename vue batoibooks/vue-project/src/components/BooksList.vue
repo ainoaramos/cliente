@@ -1,100 +1,74 @@
 <template>
-  <div id="books">
-    <ul>
-      <li v-for="book in books" :key="book.id">
-        <div>
-          <strong>Libro:</strong> {{ book.id }}
-        </div>
-        <div>
-          <strong>{{ book.module }}</strong> ({{ book.id }})
-        </div>
-        <div>
-          {{ book.publisher }}
-        </div>
-        <div>
-          <strong>Precio:</strong> {{ book.price }}€
-        </div>
-        <div>
-          <strong>Páginas:</strong> {{ book.pages }}
-        </div>
-        <div>
-          <strong>Comentarios:</strong> {{ book.comments }}
-        </div>
-        <div>
-          <button @click="addToCart(book)">Añadir al carrito</button>
-          <button @click="editBook(book)">Editar</button>
-          <button @click="confirmDelete(book)">Borrar</button>
-        </div>
-      </li>
-    </ul>
+  <div class="book-list">
+    <BookItem
+      v-for="book in books"
+      :key="book.id"
+      :book="book"
+    >
+      <template #buttons>
+        <button
+          :class="{added: isInCart(book.id)}"
+          @click="addToCart(book)"
+          :disabled="isInCart(book.id)"
+        >
+          {{ isInCart(book.id) ? 'Añadido' : 'Añadir al Carrito' }}
+        </button>
+        <button @click="editBook(book.id)">Editar</button>
+        <button @click="deleteBook(book.id)">Eliminar</button>
+      </template>
+    </BookItem>
   </div>
 </template>
 
 <script>
+import {computed} from 'vue';
+import {useBooksStore} from '../stores/books';
+import {useCartStore} from '../stores/cart';
+import BookItem from './BookItem.vue';
+import {useRouter} from 'vue-router';
+
 export default {
-  props: {
-    books: {
-      type: Array,
-      required: true,
-    },
-  },
-  methods: {
-    addToCart(book) {
-      this.$emit('addToCart', book.id);
-    },
+  components: {BookItem},
+  setup() {
+    const booksStore = useBooksStore();
+    const cartStore = useCartStore();
+    const router = useRouter();
 
-    editBook(book) {
-      this.$router.push({ name: 'edit-book', params: { id: book.id } }); 
-    },
+    const books = computed(() => booksStore.books);
+    const isInCart = cartStore.isInCart;
 
-    confirmDelete(book) {
-      const confirmation = window.confirm(
-        `¿Estás seguro de que quieres borrar el libro con ID: ${book.id} y módulo: ${book.module}?`
-      );
-
-      if (confirmation) {
-        this.$emit('deleteBook', book.id);
+    const addToCart = (book) => {
+      if (!isInCart(book.id)) {
+        cartStore.addToCart(book);
       }
-    },
+    };
+
+    const deleteBook = (bookId) => {
+      booksStore.deleteBook(bookId);
+    };
+
+    const editBook = (bookId) => {
+      router.push(`/edit/${bookId}`);
+    };
+
+    return {
+      books,
+      addToCart,
+      isInCart,
+      deleteBook,
+      editBook,
+    };
+  },
+  mounted() {
+    const booksStore = useBooksStore();
+    booksStore.fetchBooks();
+    booksStore.fetchModules();
   },
 };
 </script>
 
-<style scoped>
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
 
-li {
-  background-color: #f8f8d3;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
 
-div {
-  margin-bottom: 0.5rem;
-  font-family: Arial, sans-serif;
-  color: #333;
-}
-
-button {
-  background-color: #8f8f8f;
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-button:hover {
-  background-color: #6d6d6d;
-}
-</style>
 
 
 

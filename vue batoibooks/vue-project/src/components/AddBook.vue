@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>{{ isEdit ? 'Editar Libro' : 'Añadir Libro' }}</h1>
-    <form @submit.prevent="submitForm">
+    <form @submit.prevent="submitForm" class="add-book-form">
       <div>
         <label for="id">ID:</label>
         <input v-model="book.id" type="text" id="id" :disabled="isEdit" />
@@ -17,36 +17,34 @@
       </div>
       <div>
         <label for="publisher">Editorial:</label>
-        <input v-model="book.publisher" type="text" id="publisher" required />
+        <input v-model="book.publisher" type="text" id="publisher" required/>
       </div>
       <div>
-        <label for="price">Precio (€):</label>
-        <input v-model="book.price" type="number" id="price" required />
+        <label for="price">Precio:</label>
+        <input v-model="book.price" type="number" id="price" required/>
       </div>
       <div>
         <label for="pages">Páginas:</label>
-        <input v-model="book.pages" type="number" id="pages" required />
+        <input v-model="book.pages" type="number" id="pages" required/>
       </div>
       <div>
         <label for="comments">Comentarios:</label>
         <textarea v-model="book.comments" id="comments" required></textarea>
       </div>
-
       <div>
         <label>Estado:</label>
         <div>
           <label>
-            <input type="radio" value="Nuevo" v-model="book.state" /> Nuevo
+            <input type="radio" value="Nuevo" v-model="book.state"/> Nuevo
           </label>
           <label>
-            <input type="radio" value="Usado" v-model="book.state" /> Usado
+            <input type="radio" value="Usado" v-model="book.state"/> Usado
           </label>
           <label>
-            <input type="radio" value="Malo" v-model="book.state" /> Malo
+            <input type="radio" value="Malo" v-model="book.state"/> Malo
           </label>
         </div>
       </div>
-
       <div>
         <button type="submit">{{ isEdit ? 'Actualizar' : 'Añadir' }}</button>
         <button type="button" @click="resetForm">Reset</button>
@@ -56,9 +54,9 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 import axios from 'axios';
-import { useRoute, useRouter } from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 
 export default {
   props: {
@@ -128,6 +126,7 @@ export default {
         };
       }
     };
+
     onMounted(() => {
       fetchModules(); 
       if (props.isEdit) {
@@ -180,6 +179,7 @@ button[type="reset"] {
   background-color: #ccc;
 }
 </style>
+
 
 
 

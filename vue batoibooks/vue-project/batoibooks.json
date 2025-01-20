@@ -2127,20 +2127,6 @@
   ],
   "books": [
     {
-      "id": "1",
-      "userId": 2,
-      "moduleCode": "5025",
-      "publisher": "Apunts",
-      "price": 1,
-      "pages": 25,
-      "status": "good",
-      "photo": "",
-      "comments": "e",
-      "soldDate": "2023-02-01",
-      "module": "Didáctica de la educación infantil",
-      "state": "Usado"
-    },
-    {
       "userId": 3,
       "moduleCode": "5021",
       "publisher": "McGraw-Hill",
@@ -2172,17 +2158,32 @@
       "pages": 173,
       "status": "good",
       "photo": "",
-      "comments": "",
+      "comments": "wqeqre",
       "soldDate": "",
-      "id": "8"
+      "id": "8",
+      "module": "Didáctica de la educación infantil"
     },
     {
-      "id": "234",
-      "module": "Ofertas gastronómicas",
-      "publisher": "d",
-      "price": 1234,
-      "pages": 1233,
-      "comments": "wsd",
+      "id": "83456",
+      "userId": 4,
+      "moduleCode": "5025",
+      "publisher": "McGraw",
+      "price": 12,
+      "pages": 173,
+      "status": "good",
+      "photo": "",
+      "comments": "n",
+      "soldDate": "",
+      "module": "Autonomía personal y salud infantil",
+      "state": "Usado"
+    },
+    {
+      "id": "1",
+      "module": "Didáctica de la educación infantil",
+      "publisher": "er",
+      "price": 123,
+      "pages": 123,
+      "comments": "wt",
       "state": "Usado"
     }
   ]
